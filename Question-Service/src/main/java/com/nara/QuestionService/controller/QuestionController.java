@@ -5,7 +5,9 @@ import com.nara.QuestionService.models.Question;
 import com.nara.QuestionService.models.QuestionWrapper;
 import com.nara.QuestionService.models.Response;
 import com.nara.QuestionService.service.QuestionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +16,20 @@ import java.util.List;
 @RestController
 @RequestMapping("question")
 @ResponseStatus
+@Slf4j
 public class QuestionController {
 
 
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private Environment environment;
+
     @GetMapping("allQuestions")
     public ResponseEntity<List<Question>> getAllQuestions(){
+        System.out.println("Load on port right now is:: "+ environment.getProperty("local.server.port"));
+
         return questionService.getAllQuestions();
     }
 
